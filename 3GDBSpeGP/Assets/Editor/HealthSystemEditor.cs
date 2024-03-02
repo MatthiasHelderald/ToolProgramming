@@ -17,7 +17,6 @@ namespace Editor
 
             //Display Prop
             SerializedProperty currentHealthProp = serializedObject.FindProperty("currenthealth");
-
             GUI.enabled = false;
             EditorGUILayout.PropertyField(currentHealthProp);
             GUI.enabled = true;
@@ -31,8 +30,13 @@ namespace Editor
                 Undo.RecordObject(instance,"Refill health");
                 instance.RefillHealth();
             }
-            
-            
+
+            if (GUILayout.Button("TakeDamage"))
+            {
+                currentHealthProp.intValue -= 10;
+            }
+
+            //Pour afficher des valeur cote à coteEditorGUILayout.BeginHorizontal(); EditorGUILayour.EndHorizontal();
             serializedObject.ApplyModifiedProperties();
             //DrawDefaultInspector(); affiche l'inspecteur normal
         }

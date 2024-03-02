@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,5 +20,10 @@ public class HealthSystem : MonoBehaviour
     public void RefillHealth()
     {
         SetHealth(maxHealth);
+    }
+
+    public void TakeDamage(int damageAmount)
+    {
+        currenthealth = Math.Clamp(currenthealth - damageAmount, 0, maxHealth);
     }
 }
