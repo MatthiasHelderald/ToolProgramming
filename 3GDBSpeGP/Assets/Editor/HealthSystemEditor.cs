@@ -2,8 +2,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor
-{
     [CustomEditor(typeof(HealthSystem))]
     public class HealthSystemEditor : UnityEditor.Editor
     {
@@ -41,4 +39,3 @@ namespace Editor
             //DrawDefaultInspector(); affiche l'inspecteur normal
         }
     }
-}

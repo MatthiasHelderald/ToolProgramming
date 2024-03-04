@@ -5,11 +5,12 @@ namespace ScriptableObjects
     [CreateAssetMenu(fileName = "weaponData", menuName = "Weapons/new Weapon Data", order = 0)]
     public class WeaponData : ScriptableObject
     {
+        //Data de parametrage
         public string displayName;
         public FireMode FireMode;
         public ShootType ShootType;
 
-        public GameObject modelPrefab;
+        public Mesh model;
         public Sprite modelSprite;
 
         public float damage = 1;

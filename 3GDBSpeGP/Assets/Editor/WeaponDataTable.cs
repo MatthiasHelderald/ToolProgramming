@@ -1,17 +1,19 @@
+using ScriptableObjects;
 using UnityEditor;
 using UnityEngine;
 
-    public class HealthManagerWindow : EditorWindow
+namespace Editor
+{
+    public class WeaponDataTable : EditorWindow
     {
-        [MenuItem("Tools/HealthManager/Open HealthManager Window")]
+        [MenuItem("Tools/WeaponDataTables")]
         private static void ShowWindow()
         {
-            var window = GetWindow<HealthManagerWindow>();
-            window.titleContent = new GUIContent("Health Manager");
+            var window = GetWindow<WeaponDataTable>();
+            window.titleContent = new GUIContent("WeaponDataTable");
             window.Show();
         }
 
-        // 4 colognne avec le sparamètres de vie
         private void OnGUI()
         {
             GUI.backgroundColor = new Color(0.3f, 0.1f, 0f);
@@ -58,16 +60,17 @@ using UnityEngine;
             EditorGUILayout.EndHorizontal();
         }
 
-        [MenuItem("Tools/HealthManager/Refill Health &o")]
-        public static void RefillHealth()
+        
+        private void LoadAllAssetsOfType<T>(out T[] assets) where T : Object
         {
-            HealthSystem hs = FindObjectOfType<HealthSystem>();
-            if (hs != null)
-            {
-                Undo.RecordObject(hs, "Refill health");
-                hs.RefillHealth();
-            }
+            string[] guids = AssetDatabase.FindAssets("t:"+typeof(T));
+            assets = new T[guids.Length];
 
-            Debug.Log("Refill Health");
+            for (int i = 0; i < guids.Length; i++)
+            {
+                string assetPath = AssetDatabase.GUIDToAssetPath(guids[i]);
+                assets[i] = AssetDatabase.LoadAssetAtPath<T>(assetPath);
+            }
         }
     }
+}
