@@ -20,37 +20,36 @@ namespace Editor
             GUILayout.Box("HealthManager", GUILayout.ExpandWidth(true), GUILayout.Height(30));
 
             EditorGUILayout.BeginHorizontal();
-            HealthSystem[] healthSystems = FindObjectsOfType<HealthSystem>();
-            if (healthSystems.Length > 0)
+            
+            LoadAllAssetsOfType<WeaponData>(out WeaponData[] weapons);
+            PickableWeapon[] weaponDatas = FindObjectsOfType<PickableWeapon>();
+            if (weaponDatas.Length > 0)
             {
                 SerializedObject so = null;
-                foreach (var healthSystem in healthSystems)
+                foreach (var weapon in weapons)
                 {
-                    so = new SerializedObject(healthSystem);
+                    so = new SerializedObject(weapon);
                     so.Update();
-
+                    
                     EditorGUILayout.BeginVertical();
-                    GUILayout.Label(healthSystem.name);
-                    //EditorGUILayout.LabelField("Name :" + healthSystem.name);
+                    GUILayout.Label(weapon.name);
 
                     GUI.enabled = false;
-                    EditorGUILayout.PropertyField(so.FindProperty("currenthealth"));
+                    EditorGUILayout.PropertyField(so.FindProperty("FireMode"));
                     GUI.enabled = true;
 
-                    EditorGUILayout.PropertyField(so.FindProperty("maxHealth"));
+                    EditorGUILayout.PropertyField(so.FindProperty("ShootType"));
 
                     EditorGUILayout.Separator();
 
-                    if (GUILayout.Button("Refill Health"))
+                    if (GUILayout.Button("Create Weapon"))
                     {
-                        Undo.RecordObject(healthSystem, "Refill health");
-                        healthSystem.RefillHealth();
+                        
                     }
 
-                    if (GUILayout.Button("TakeDamage"))
+                    if (GUILayout.Button("Delete Weapon"))
                     {
-                        Undo.RecordObject(healthSystem, "TakeDamage");
-                        so.FindProperty("currenthealth").intValue -= 10;
+                        
                     }
 
                     EditorGUILayout.EndVertical();

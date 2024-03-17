@@ -11,7 +11,7 @@ using UnityEngine;
             window.Show();
         }
 
-        // 4 colognne avec le sparamètres de vie
+        // 4 colonnes avec les paramètres de vie
         private void OnGUI()
         {
             GUI.backgroundColor = new Color(0.3f, 0.1f, 0f);
