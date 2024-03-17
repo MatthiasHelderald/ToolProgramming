@@ -10,6 +10,6 @@ public class PickableWeapon : MonoBehaviour
 
     private void OnValidate()
     {
-        GetComponentInChildren<MeshFilter>().sharedMesh = data.weaponData.model;
+        //GetComponentInChildren<MeshFilter>().sharedMesh = data.weaponData.model;
     }
 }
