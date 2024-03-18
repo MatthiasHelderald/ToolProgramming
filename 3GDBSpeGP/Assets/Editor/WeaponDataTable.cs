@@ -19,6 +19,7 @@ namespace Editor
 
         private PopupContainer _popupContainer;
         public WeaponData weapon;
+        private bool even;
 
         public string[] Strings =
         {
@@ -41,7 +42,11 @@ namespace Editor
 
                 foreach (var s in Strings)
                 {
-                    EditorGUILayout.LabelField(s);
+                    //GUIStyle style = new GUIStyle();
+                    //style.alignment = TextAnchor.UpperLeft;
+                    //style.fixedWidth = 200;
+                    EditorGUILayout.SelectableLabel(s,GUILayout.Width(200));
+                    this.Repaint();
                 }
 
                 EditorGUILayout.EndHorizontal();
@@ -53,12 +58,15 @@ namespace Editor
                     so = new SerializedObject(weapon);
                     so.Update();
                     
+                    even = !even;
+                    GUI.backgroundColor = even ? new Color(0.39f, 0.46f, 0.5f) 
+                        : new Color(1f, 0.51f, 0.47f);
+
                     foreach (var s in Strings)
                     {
                         EditorGUILayout.BeginVertical();
-                        EditorGUILayout.PropertyField(so.FindProperty(s),GUIContent.none);
+                        EditorGUILayout.PropertyField(so.FindProperty(s), GUIContent.none,GUILayout.Width(200));
                         so.ApplyModifiedProperties();
-
                         EditorGUILayout.EndVertical();
                     }
 
