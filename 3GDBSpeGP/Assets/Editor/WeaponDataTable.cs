@@ -40,12 +40,9 @@ namespace Editor
 
                 EditorGUILayout.BeginHorizontal();
 
-                foreach (var s in Strings)
+                foreach (var property in Strings)
                 {
-                    //GUIStyle style = new GUIStyle();
-                    //style.alignment = TextAnchor.UpperLeft;
-                    //style.fixedWidth = 200;
-                    EditorGUILayout.SelectableLabel(s,GUILayout.Width(75));
+                    EditorGUILayout.SelectableLabel(property,GUILayout.Width(75));
                     this.Repaint();
                 }
 
@@ -62,10 +59,10 @@ namespace Editor
                     GUI.backgroundColor = even ? new Color(0.39f, 0.46f, 0.5f) 
                         : new Color(1f, 0.51f, 0.47f);
 
-                    foreach (var s in Strings)
+                    foreach (var property in Strings)
                     {
                         EditorGUILayout.BeginVertical();
-                        EditorGUILayout.PropertyField(so.FindProperty(s), GUIContent.none,GUILayout.Width(75));
+                        EditorGUILayout.PropertyField(so.FindProperty(property), GUIContent.none,GUILayout.Width(75));
                         so.ApplyModifiedProperties();
                         EditorGUILayout.EndVertical();
                     }
