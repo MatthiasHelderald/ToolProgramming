@@ -13,11 +13,13 @@ namespace Editor
             window.titleContent = new GUIContent("WeaponDataTable");
             window.Show();
         }
+        
+        public string[] Strings = { "FireMode","ShootType","model","modelSprite","damage","accuracy","recoilForce","maxAmmo",};
         private void OnGUI()
         {
             GUI.backgroundColor = new Color(0.3f, 0.1f, 0f);
             GUILayout.Box("WeaponDataTable", GUILayout.ExpandWidth(true), GUILayout.Height(30));
-            
+
             LoadAllAssetsOfType(out WeaponData[] weapons);
 
             if (weapons.Length > 0)
@@ -25,30 +27,25 @@ namespace Editor
                 SerializedObject so = null;
                 foreach (var weapon in weapons)
                 {
+                    EditorGUILayout.BeginVertical();
                     so = new SerializedObject(weapon);
                     so.Update();
+                    EditorGUILayout.EndVertical();
+                    foreach (var s in Strings)
+                    {
+                        EditorGUILayout.BeginHorizontal();
+                        
+                        EditorGUILayout.PropertyField(so.FindProperty(s));
+                        
+                        GUILayout.Label(weapon.name);
 
-                    EditorGUILayout.BeginHorizontal();
+                        if (GUILayout.Button("Create Weapon")) DuplicateWeapon(weapon);
 
-                    GUILayout.Label(weapon.name);
-                    GUILayout.FlexibleSpace();
-                    EditorGUILayout.PropertyField(so.FindProperty("FireMode"), GUIContent.none);
-                    EditorGUILayout.PropertyField(so.FindProperty("ShootType"), GUIContent.none);
+                        if (GUILayout.Button("Delete Weapon")) DeleteWeapon(weapon);
 
-                    EditorGUILayout.PropertyField(so.FindProperty("model"), GUIContent.none);
-                    EditorGUILayout.PropertyField(so.FindProperty("modelSprite"), GUIContent.none);
-
-                    EditorGUILayout.PropertyField(so.FindProperty("damage"), GUIContent.none);
-                    EditorGUILayout.PropertyField(so.FindProperty("accuracy"), GUIContent.none);
-                    EditorGUILayout.PropertyField(so.FindProperty("recoilForce"), GUIContent.none);
-                    EditorGUILayout.PropertyField(so.FindProperty("maxAmmo"), GUIContent.none);
-
-                    if (GUILayout.Button("Create Weapon")) DuplicateWeapon(weapon);
-
-                    if (GUILayout.Button("Delete Weapon")) DeleteWeapon(weapon);
-
-                    so.ApplyModifiedProperties();
-                    EditorGUILayout.EndHorizontal();
+                        so.ApplyModifiedProperties();
+                        EditorGUILayout.EndHorizontal();
+                    }
                 }
             }
         }
