@@ -45,7 +45,7 @@ namespace Editor
                     //GUIStyle style = new GUIStyle();
                     //style.alignment = TextAnchor.UpperLeft;
                     //style.fixedWidth = 200;
-                    EditorGUILayout.SelectableLabel(s,GUILayout.Width(200));
+                    EditorGUILayout.SelectableLabel(s,GUILayout.Width(75));
                     this.Repaint();
                 }
 
@@ -65,7 +65,7 @@ namespace Editor
                     foreach (var s in Strings)
                     {
                         EditorGUILayout.BeginVertical();
-                        EditorGUILayout.PropertyField(so.FindProperty(s), GUIContent.none,GUILayout.Width(200));
+                        EditorGUILayout.PropertyField(so.FindProperty(s), GUIContent.none,GUILayout.Width(75));
                         so.ApplyModifiedProperties();
                         EditorGUILayout.EndVertical();
                     }
