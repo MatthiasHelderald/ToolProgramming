@@ -1,5 +1,6 @@
 using System;
 using ScriptableObjects;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -9,6 +10,7 @@ namespace Editor
 {
     public class WeaponDataTable : EditorWindow
     {
+        Vector2 scrollPos;
         [MenuItem("Tools/WeaponDataTables")]
         private static void ShowWindow()
         {
@@ -38,6 +40,8 @@ namespace Editor
             {
                 SerializedObject so = null;
 
+                var width = EditorGUIUtility.currentViewWidth;
+                scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
                 EditorGUILayout.BeginHorizontal();
 
                 foreach (var property in Strings)
@@ -47,7 +51,7 @@ namespace Editor
                 }
 
                 EditorGUILayout.EndHorizontal();
-
+                
                 foreach (var weapon in weapons)
                 {
                     EditorGUILayout.BeginHorizontal();
@@ -72,6 +76,7 @@ namespace Editor
 
                     EditorGUILayout.EndHorizontal();
                 }
+                EditorGUILayout.EndScrollView();
             }
         }
 
