@@ -13,7 +13,9 @@ namespace Editor
             window.titleContent = new GUIContent("WeaponDataTable");
             window.Show();
         }
-        
+
+        private PopupContainer _popupContainer;
+        public WeaponData weapon;
         public string[] Strings = { "displayName","FireMode","ShootType","model","modelSprite","damage","accuracy","recoilForce","maxAmmo",};
         private void OnGUI()
         {
@@ -79,13 +81,10 @@ namespace Editor
             Debug.Log("Duplicated " + weapon.name);
         }
 
-        private void DeleteWeapon(WeaponData weapon)
+        public void DeleteWeapon(WeaponData weapon)
         {
-            CreateWindow<PopupContainer>();
-            var path = AssetDatabase.GetAssetPath(weapon);
-            AssetDatabase.DeleteAsset(path);
-            AssetDatabase.Refresh();
-            Debug.Log("Deleted");
+            _popupContainer = CreateWindow<PopupContainer>();
+            this.weapon = weapon;
         }
 
         private void LoadAllAssetsOfType<T>(out T[] assets) where T : Object

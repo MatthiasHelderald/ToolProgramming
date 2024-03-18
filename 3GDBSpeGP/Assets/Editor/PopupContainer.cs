@@ -1,3 +1,4 @@
+using Editor;
 using UnityEngine;
 using UnityEditor;
 
@@ -5,27 +6,34 @@ public class PopupContainer : EditorWindow
 {
     Rect button_yesRect;
     Rect button_noRect;
-    
+
+    private WeaponDataTable _weaponDataTable;
     public Vector2 GetWindowSize()
     {
-        return new Vector2(200, 150);
+        return new Vector2(50, 50);
     }
     void OnGUI()
     {
-        GUILayout.Label("Popup Options Example", EditorStyles.boldLabel);
+        //GUILayout.Label("Popup Options Example", EditorStyles.boldLabel);
         {
-            if (GUILayout.Button("button_yesRect", GUILayout.Width(100)))
+            if (GUILayout.Button("YES", GUILayout.Width(100)))
             {
-                //windowYes = true;
+                _weaponDataTable = GetWindow<WeaponDataTable>();
+                Debug.Log(_weaponDataTable);
+                var path = AssetDatabase.GetAssetPath(_weaponDataTable.weapon);
+                AssetDatabase.DeleteAsset(path);
+                AssetDatabase.Refresh();
+                Debug.Log(_weaponDataTable.weapon);
+                Debug.Log("Deleted");
             }
             if (Event.current.type == EventType.Repaint) button_yesRect = GUILayoutUtility.GetLastRect();
         }
         
-        GUILayout.Label("Popup Options Example", EditorStyles.boldLabel);
+        //GUILayout.Label("Popup Options Example", EditorStyles.boldLabel);
         {
-            if (GUILayout.Button("button_yesRect", GUILayout.Width(100)))
+            if (GUILayout.Button("NO", GUILayout.Width(100)))
             {
-                //windowYes = false;
+                
             }
             if (Event.current.type == EventType.Repaint) button_noRect = GUILayoutUtility.GetLastRect();
         }
