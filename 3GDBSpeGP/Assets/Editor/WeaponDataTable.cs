@@ -1,6 +1,9 @@
+using System;
 using ScriptableObjects;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace Editor
 {
@@ -16,7 +19,13 @@ namespace Editor
 
         private PopupContainer _popupContainer;
         public WeaponData weapon;
-        public string[] Strings = { "displayName","FireMode","ShootType","model","modelSprite","damage","accuracy","recoilForce","maxAmmo",};
+
+        public string[] Strings =
+        {
+            "displayName", "FireMode", "ShootType", "model", "modelSprite", "damage", "accuracy", "recoilForce",
+            "maxAmmo",
+        };
+
         private void OnGUI()
         {
             GUI.backgroundColor = new Color(0.3f, 0.1f, 0f);
@@ -27,45 +36,36 @@ namespace Editor
             if (weapons.Length > 0)
             {
                 SerializedObject so = null;
-                
+
                 EditorGUILayout.BeginHorizontal();
-                
+
                 foreach (var s in Strings)
                 {
                     EditorGUILayout.LabelField(s);
-                    
-                    
                 }
+
                 EditorGUILayout.EndHorizontal();
-                
+
                 foreach (var weapon in weapons)
                 {
                     EditorGUILayout.BeginHorizontal();
                     
                     so = new SerializedObject(weapon);
-                    
                     so.Update();
-
+                    
                     foreach (var s in Strings)
                     {
                         EditorGUILayout.BeginVertical();
-                        
-                        //EditorGUILayout.LabelField(s);
                         EditorGUILayout.PropertyField(so.FindProperty(s),GUIContent.none);
-                        
                         so.ApplyModifiedProperties();
 
                         EditorGUILayout.EndVertical();
                     }
-                    
-                    if (GUILayout.Button("Duplicate Weapon")) {
-                        DuplicateWeapon(weapon);
-                    }
-                    if (GUILayout.Button("Delete Weapon")) {
-                        DeleteWeapon(weapon);
-                    }
+
+                    if (GUILayout.Button("Duplicate Weapon")) DuplicateWeapon(weapon);
+                    if (GUILayout.Button("Delete Weapon")) DeleteWeapon(weapon);
+
                     EditorGUILayout.EndHorizontal();
-                    
                 }
             }
         }

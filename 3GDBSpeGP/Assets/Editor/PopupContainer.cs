@@ -19,12 +19,11 @@ public class PopupContainer : EditorWindow
             if (GUILayout.Button("YES", GUILayout.Width(100)))
             {
                 _weaponDataTable = GetWindow<WeaponDataTable>();
-                Debug.Log(_weaponDataTable);
                 var path = AssetDatabase.GetAssetPath(_weaponDataTable.weapon);
                 AssetDatabase.DeleteAsset(path);
                 AssetDatabase.Refresh();
-                Debug.Log(_weaponDataTable.weapon);
                 Debug.Log("Deleted");
+                Close();
             }
             if (Event.current.type == EventType.Repaint) button_yesRect = GUILayoutUtility.GetLastRect();
         }
@@ -33,7 +32,7 @@ public class PopupContainer : EditorWindow
         {
             if (GUILayout.Button("NO", GUILayout.Width(100)))
             {
-                
+                Close();
             }
             if (Event.current.type == EventType.Repaint) button_noRect = GUILayoutUtility.GetLastRect();
         }
