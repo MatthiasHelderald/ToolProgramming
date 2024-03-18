@@ -14,7 +14,7 @@ namespace Editor
             window.Show();
         }
         
-        public string[] Strings = { "FireMode","ShootType","model","modelSprite","damage","accuracy","recoilForce","maxAmmo",};
+        public string[] Strings = { "displayName","FireMode","ShootType","model","modelSprite","damage","accuracy","recoilForce","maxAmmo",};
         private void OnGUI()
         {
             GUI.backgroundColor = new Color(0.3f, 0.1f, 0f);
@@ -25,27 +25,45 @@ namespace Editor
             if (weapons.Length > 0)
             {
                 SerializedObject so = null;
+                
+                EditorGUILayout.BeginHorizontal();
+                
+                foreach (var s in Strings)
+                {
+                    EditorGUILayout.LabelField(s);
+                    
+                    
+                }
+                EditorGUILayout.EndHorizontal();
+                
                 foreach (var weapon in weapons)
                 {
-                    EditorGUILayout.BeginVertical();
+                    EditorGUILayout.BeginHorizontal();
+                    
                     so = new SerializedObject(weapon);
+                    
                     so.Update();
-                    EditorGUILayout.EndVertical();
+
                     foreach (var s in Strings)
                     {
-                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.BeginVertical();
                         
-                        EditorGUILayout.PropertyField(so.FindProperty(s));
+                        //EditorGUILayout.LabelField(s);
+                        EditorGUILayout.PropertyField(so.FindProperty(s),GUIContent.none);
                         
-                        GUILayout.Label(weapon.name);
-
-                        if (GUILayout.Button("Create Weapon")) DuplicateWeapon(weapon);
-
-                        if (GUILayout.Button("Delete Weapon")) DeleteWeapon(weapon);
-
                         so.ApplyModifiedProperties();
-                        EditorGUILayout.EndHorizontal();
+
+                        EditorGUILayout.EndVertical();
                     }
+                    
+                    if (GUILayout.Button("Duplicate Weapon")) {
+                        DuplicateWeapon(weapon);
+                    }
+                    if (GUILayout.Button("Delete Weapon")) {
+                        DeleteWeapon(weapon);
+                    }
+                    EditorGUILayout.EndHorizontal();
+                    
                 }
             }
         }
