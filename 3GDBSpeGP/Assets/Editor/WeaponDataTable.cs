@@ -11,6 +11,10 @@ namespace Editor
     public class WeaponDataTable : EditorWindow
     {
         Vector2 scrollPos;
+        Color backGroundcolor = Color.white;
+        Color guiColor = Color.white;
+        private Material fontMat;
+        
         [MenuItem("Tools/WeaponDataTables")]
         private static void ShowWindow()
         {
@@ -31,7 +35,12 @@ namespace Editor
 
         private void OnGUI()
         {
-            GUI.backgroundColor = new Color(0.3f, 0.1f, 0f);
+            backGroundcolor = EditorGUILayout.ColorField("BackGroundColor", backGroundcolor);
+            guiColor = EditorGUILayout.ColorField("GUI Color", guiColor);
+            
+            GUI.backgroundColor = backGroundcolor;
+            GUI.contentColor = guiColor;
+            
             GUILayout.Box("WeaponDataTable", GUILayout.ExpandWidth(true), GUILayout.Height(30));
 
             LoadAllAssetsOfType(out WeaponData[] weapons);
