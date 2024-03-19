@@ -70,9 +70,10 @@ namespace Editor
                         so.ApplyModifiedProperties();
                         EditorGUILayout.EndVertical();
                     }
-
+                    
                     if (GUILayout.Button("Duplicate Weapon")) DuplicateWeapon(weapon);
                     if (GUILayout.Button("Delete Weapon")) DeleteWeapon(weapon);
+                    GUILayout.Box( AssetPreview.GetAssetPreview(weapon.modelSprite));
 
                     EditorGUILayout.EndHorizontal();
                 }
