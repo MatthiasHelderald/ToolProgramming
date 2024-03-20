@@ -1,6 +1,9 @@
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
+using System.Collections;
+using ScriptableObjects;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 namespace Editor
 {
@@ -13,21 +16,23 @@ namespace Editor
             window.titleContent = new GUIContent("TITLE");
             window.Show();
         }
-
         private void OnGUI()
         {
+            SerializedProperty names;
+
             foreach (var sceneGUID in AssetDatabase.FindAssets("t:Scene"))
             {
                 var scenePath = AssetDatabase.GUIDToAssetPath(sceneGUID);
                 var sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
+
                 EditorGUILayout.LabelField(sceneName);
-    
-                // Add buttons or functionality here for managing scenes (e.g., open, close, load)
-                if (GUILayout.Button("Open"))
-                {
-                    EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
-                    //see EditorSceneManager documentation for further functionality 
-                }
+                
+                if (GUILayout.Button("Open")) EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
+                if (GUILayout.Button("Close"))
+                    EditorSceneManager.CloseScene(UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName),
+                        true);
+
+                //persistence = GUILayout.Toggle(persistence, "Load?");
             }
         }
     }
