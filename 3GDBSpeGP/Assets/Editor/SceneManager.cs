@@ -2,7 +2,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using System.Collections;
-using Data;
+using System.Collections.Generic;
 using ScriptableObjects;
 using Object = UnityEngine.Object;
 using UnityEditor.SceneManagement;
@@ -13,6 +13,7 @@ namespace Editor
     public class SceneManager : EditorWindow
     {
         public bool playState;
+        private SceneData sceneData;
         private PlayModeStateChange playModeStateChange;
         [MenuItem("Tools/SceneManager")]
         private static void ShowWindow()
@@ -24,22 +25,18 @@ namespace Editor
         private void OnGUI()
         {
             LoadAllAssetsOfType(out SceneData[] sceneData);
-            SerializedObject SerializedSceneData = new SerializedObject(sceneData[0]);
+            if (sceneData == null || sceneData.Length == 0)
+                return;
+            this.sceneData = sceneData[0];
 
             foreach (var sceneGUID in AssetDatabase.FindAssets("t:Scene"))
             {
                 var scenePath = AssetDatabase.GUIDToAssetPath(sceneGUID);
                 var sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
+                bool sceneBool = sceneData[0].GetPersistence(sceneGUID);
                 
-                sceneData[0].UpdateAllScenesList(sceneGUID);
-
                 EditorGUILayout.LabelField(sceneName);
                 
-                var ScenesList = SerializedSceneData.FindProperty("sceneLoaderDatas");
-                
-                
-                //if(GUILayout.Toggle(.Persistence,"Persistent"))
-                    
                 if (GUILayout.Button("Open"))
                     if (playState)
                         UnityEngine.SceneManagement.SceneManager.LoadScene(scenePath, LoadSceneMode.Additive);
@@ -54,6 +51,10 @@ namespace Editor
                         EditorSceneManager.CloseScene(
                             UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName), true);
                 
+                if (GUILayout.Button("Persistent"));
+                    sceneBool = !sceneBool;
+                
+                sceneData[0].UpdateScene(sceneGUID,sceneBool);
             }
             
         }
@@ -68,6 +69,27 @@ namespace Editor
                 assets[i] = AssetDatabase.LoadAssetAtPath<T>(assetPath);
             }
         }
-
+        public void UnloadScenesAtPlaymode()
+        {
+            if(sceneData == null)
+                return;
+            var sceneGUIDs = AssetDatabase.FindAssets("t:Scene");
+            foreach (var sceneGUID in sceneGUIDs)
+            {
+                var scenename = GetSceneName(sceneGUID);
+                if(!sceneData.GetPersistence(sceneGUID))
+                {
+                    UnityEngine.SceneManagement.SceneManager.UnloadScene(
+                        UnityEngine.SceneManagement.SceneManager.GetSceneByName(scenename));
+                }
+                //else
+                    //UnityEngine.SceneManagement.SceneManager.LoadScene(scenename, LoadSceneMode.Additive);
+            }
+        }
+        public string GetSceneName(string sceneGUID)
+        {
+            var scenePath = AssetDatabase.GUIDToAssetPath(sceneGUID);
+            return System.IO.Path.GetFileNameWithoutExtension(scenePath);
+        }
     }
 }

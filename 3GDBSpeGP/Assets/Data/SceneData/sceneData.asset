@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efffe8af16804b41af4e864c6e2f18c8, type: 3}
   m_Name: sceneData
   m_EditorClassIdentifier: 
-  sceneNameList:
-  - SampleScene
-  - Assets/Scenes/SampleScene.unity
-  - uh
-  - Assets/Scenes/uh.unity
-  persistentScenes: []
+  SceneGUI:
+  - 9fc0d4010bbf28b4594072e72b8655ab
+  - 051f05ae1f91d0947a3c116171fa8d6c
+  - 13c897a9ca2dd3340bf42af22ab1129f
+  SceneBool: 010101
