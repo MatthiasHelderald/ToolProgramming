@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 using System.Collections;
@@ -9,6 +10,8 @@ namespace Editor
 {
     public class SceneManager : EditorWindow
     {
+        public bool playState;
+        private PlayModeStateChange playModeStateChange;
         [MenuItem("MENUITEM/MENUITEMCOMMAND")]
         private static void ShowWindow()
         {
@@ -16,6 +19,7 @@ namespace Editor
             window.titleContent = new GUIContent("TITLE");
             window.Show();
         }
+        
         private void OnGUI()
         {
             SerializedProperty names;
@@ -26,11 +30,20 @@ namespace Editor
                 var sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
 
                 EditorGUILayout.LabelField(sceneName);
-                
-                if (GUILayout.Button("Open")) EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
+
+                if (GUILayout.Button("Open"))
+                    if (playState)
+                        UnityEngine.SceneManagement.SceneManager.LoadScene(scenePath, LoadSceneMode.Additive);
+                    else
+                        EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
+
                 if (GUILayout.Button("Close"))
-                    EditorSceneManager.CloseScene(UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName),
-                        true);
+                    if (playState)
+                        UnityEngine.SceneManagement.SceneManager.UnloadScene(
+                            UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName));
+                    else
+                        EditorSceneManager.CloseScene(
+                            UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName), true);
 
                 //persistence = GUILayout.Toggle(persistence, "Load?");
             }
