@@ -14,7 +14,6 @@ public class DetectPlayModeChanges {
     private static void OnPlayModeStateChanged(PlayModeStateChange state) {
         switch (state) {
             case PlayModeStateChange.ExitingEditMode:
-                Debug.Log("uh");
                 Debug.Log(EditorWindow.GetWindow<SceneManager>().playState);
                 EditorWindow.GetWindow<SceneManager>().playState = true;
                 break;
