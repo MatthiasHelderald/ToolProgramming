@@ -50,9 +50,17 @@ namespace Editor
                     else
                         EditorSceneManager.CloseScene(
                             UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName), true);
-                
-                if (GUILayout.Button("Persistent"));
-                    sceneBool = !sceneBool;
+
+                if (GUILayout.Button("Persistent"))
+                {
+                    sceneBool = !sceneBool; 
+                    //Debug.Log(sceneBool);
+                    foreach( var x in sceneData[0].SceneBool) {
+                        Debug.Log( x.ToString());
+                    }
+
+                }
+                    
                 
                 sceneData[0].UpdateScene(sceneGUID,sceneBool);
             }
@@ -84,6 +92,22 @@ namespace Editor
                 }
                 //else
                     //UnityEngine.SceneManagement.SceneManager.LoadScene(scenename, LoadSceneMode.Additive);
+            }
+        }
+        public void LoadScenesAtPlaymode()
+        {
+            if(sceneData == null)
+                return;
+            var sceneGUIDs = AssetDatabase.FindAssets("t:Scene");
+            foreach (var sceneGUID in sceneGUIDs)
+            {
+                var scenename = GetSceneName(sceneGUID);
+                if(sceneData.GetPersistence(sceneGUID))
+                {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(scenename, LoadSceneMode.Additive);
+                }
+                //else
+                //UnityEngine.SceneManagement.SceneManager.LoadScene(scenename, LoadSceneMode.Additive);
             }
         }
         public string GetSceneName(string sceneGUID)
