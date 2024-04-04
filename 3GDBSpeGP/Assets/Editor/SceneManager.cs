@@ -56,11 +56,9 @@ namespace Editor
                     sceneBool = !sceneBool; 
                     //Debug.Log(sceneBool);
                     foreach( var x in sceneData[0].SceneBool) {
-                        Debug.Log( x.ToString());
+                        //Debug.Log( x.ToString());
                     }
-
                 }
-                    
                 
                 sceneData[0].UpdateScene(sceneGUID,sceneBool);
             }
@@ -87,8 +85,15 @@ namespace Editor
                 var scenename = GetSceneName(sceneGUID);
                 if(!sceneData.GetPersistence(sceneGUID))
                 {
-                    UnityEngine.SceneManagement.SceneManager.UnloadScene(
-                        UnityEngine.SceneManagement.SceneManager.GetSceneByName(scenename));
+                    try
+                    {
+                        UnityEngine.SceneManagement.SceneManager.UnloadScene(
+                                                UnityEngine.SceneManagement.SceneManager.GetSceneByName(scenename));
+                    }
+                    catch (Exception)
+                    {
+                        return;
+                    }
                 }
                 //else
                     //UnityEngine.SceneManagement.SceneManager.LoadScene(scenename, LoadSceneMode.Additive);
@@ -102,13 +107,16 @@ namespace Editor
             foreach (var sceneGUID in sceneGUIDs)
             {
                 var scenename = GetSceneName(sceneGUID);
-                if(sceneData.GetPersistence(sceneGUID))
+                if(sceneData.GetPersistence(sceneGUID) && !UnityEngine.SceneManagement.SceneManager.GetSceneByName(scenename).isLoaded)
                 {
                     UnityEngine.SceneManagement.SceneManager.LoadScene(scenename, LoadSceneMode.Additive);
                 }
-                //else
-                //UnityEngine.SceneManagement.SceneManager.LoadScene(scenename, LoadSceneMode.Additive);
             }
+        }
+
+        public void LoadScenesAtEditmode()
+        {
+            
         }
         public string GetSceneName(string sceneGUID)
         {
