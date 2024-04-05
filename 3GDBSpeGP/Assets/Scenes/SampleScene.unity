@@ -332,8 +332,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24eb3c8859941c344b1e500943e867a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currenthealth: -18
-  maxHealth: 2
+  currenthealth: 5
+  maxHealth: 5
   mana: 0
 --- !u!135 &1185305162
 SphereCollider:

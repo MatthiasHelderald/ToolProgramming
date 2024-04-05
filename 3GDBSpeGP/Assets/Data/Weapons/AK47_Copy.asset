@@ -17,7 +17,7 @@ MonoBehaviour:
   ShootType: 0
   model: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
   modelSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  damage: 1
+  damage: 5
   accuracy: 10
-  recoilForce: 10
-  maxAmmo: 10
+  recoilForce: 5
+  maxAmmo: 20
