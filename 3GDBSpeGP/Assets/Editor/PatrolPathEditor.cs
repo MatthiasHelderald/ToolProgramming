@@ -33,8 +33,27 @@ namespace Editor
                     Undo.RecordObject(t,"Waypoint Changed");
                     t.Waypoints = waypointsCopy;
                 }
-
             }
         }
+
+        //Permet d'implenter ondrawgizmo ds editor
+        //Todo draw dotted line between waypoints
+        [DrawGizmo((GizmoType.Selected | GizmoType.NonSelected))]
+        private static void DrawGizmo(PatrolPath t,GizmoType gizmoType)
+        {
+            Vector3 lastPos = t.waypoints[^1];
+            Handles.color = new Color(0.55f, 1f, 0.44f);
+            Vector3 tPos = t.transform.position;
+            Handles.DrawDottedLine(tPos +t. waypoints[0],tPos + lastPos,10f);
+            
+            for (var i = 0; i < t.waypoints.Length; i++)
+            {
+                Vector3 wPos = tPos + t.waypoints[i];
+                Handles.DrawWireDisc(wPos,Vector3.up ,0.5f);
+                Handles.PositionHandle(wPos, Quaternion.identity);
+                lastPos = t.waypoints[i];
+            }
+        }
+
     }
 }
