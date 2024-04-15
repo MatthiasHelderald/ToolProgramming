@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ namespace Editor
         private void OnSceneGUI()
         {
             PatrolPath t = target as PatrolPath;
+
+            Vector3[] waypointsCopy = t.waypoints.ToArray();
             
             Vector3 lastPos = t.waypoints[^1];
             Vector3 tPos = t.transform.position;
@@ -18,12 +21,19 @@ namespace Editor
             
             for (var i = 0; i < t.Waypoints.Length; i++)
             {
-                t.Waypoints[i] = Handles.PositionHandle(tPos + t.Waypoints[i], Quaternion.identity) - tPos;
-                
+                EditorGUI.BeginChangeCheck();
+                waypointsCopy[i] = Handles.PositionHandle(tPos + t.Waypoints[i], Quaternion.identity) - tPos;
+                Handles.DrawDottedLine(tPos + waypointsCopy[i], tPos+lastPos, screenSpaceSize:10f);
+                lastPos = waypointsCopy[i];
                 var waypoint = tPos+t.Waypoints[i];
                 Handles.DrawWireDisc(waypoint, Vector3.up, 0.2f, 0.5f);
-                Handles.DrawDottedLine(waypoint, tPos+lastPos, screenSpaceSize:10f);
-                lastPos = t.Waypoints[i];
+
+                if (EditorGUI.EndChangeCheck())
+                {
+                    Undo.RecordObject(t,"Waypoint Changed");
+                    t.Waypoints = waypointsCopy;
+                }
+
             }
         }
     }
