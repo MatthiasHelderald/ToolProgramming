@@ -7,7 +7,9 @@ using UnityEngine;
 public class PatrolPath : MonoBehaviour
 {
     [SerializeField] private Vector3[] waypoints;
+    public Vector3[] Waypoints => waypoints;
 
+    /*
     private void OnDrawGizmos()
     {
         if (waypoints == null || waypoints.Length <= 1)
@@ -38,7 +40,7 @@ public class PatrolPath : MonoBehaviour
         for (var i = 0; i < waypoints.Length; i++)
         {
             Vector3 wPos = tPos + waypoints[i];
-            Handles.PositionHandle(wPos, Quaternion.identity);
+            waypoints[i] = Handles.PositionHandle(wPos, Quaternion.identity) - tPos;
         }
-    }
+    }*/
 }
