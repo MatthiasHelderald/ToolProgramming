@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class PatrolPath : MonoBehaviour
 {
-    [SerializeField] private Vector3[] waypoints;
+    [SerializeField] public Vector3[] waypoints;
     public Vector3[] Waypoints => waypoints;
 
-    /*
+    
     private void OnDrawGizmos()
     {
         if (waypoints == null || waypoints.Length <= 1)
@@ -20,7 +20,7 @@ public class PatrolPath : MonoBehaviour
         Vector3 lastPos = waypoints[^1];
         Handles.color = new Color(0.55f, 1f, 0.44f);
         Vector3 tPos = transform.position;
-        Handles.DrawDottedLine(waypoints[0],tPos + lastPos,10f);
+        Handles.DrawDottedLine(tPos + waypoints[0],tPos + lastPos,10f);
             
         for (var i = 0; i < waypoints.Length; i++)
         {
@@ -42,5 +42,5 @@ public class PatrolPath : MonoBehaviour
             Vector3 wPos = tPos + waypoints[i];
             waypoints[i] = Handles.PositionHandle(wPos, Quaternion.identity) - tPos;
         }
-    }*/
+    }
 }

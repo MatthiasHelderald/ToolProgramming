@@ -330,10 +330,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints:
-  - {x: 14.971302, y: -1.8556199, z: 0}
-  - {x: 2.1793313, y: 4.3533354, z: 110.00238}
-  - {x: 6.02518, y: 1.67, z: 11.500626}
-  - {x: -6.0027905, y: -4.49, z: 1.77}
+  - {x: 0, y: 0, z: 0}
+  - {x: 6.247841, y: 3.1191597, z: 7.2070336}
+  - {x: -0.29606605, y: 0, z: 12.100014}
+  - {x: 5.582547, y: 0, z: 5.772789}
 --- !u!4 &1401785578
 Transform:
   m_ObjectHideFlags: 0
@@ -343,7 +343,7 @@ Transform:
   m_GameObject: {fileID: 1401785576}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.74, y: 0, z: 0}
+  m_LocalPosition: {x: 1.74, y: 0, z: -7.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
