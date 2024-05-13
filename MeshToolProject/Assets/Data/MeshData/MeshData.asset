@@ -18,3 +18,4 @@ MonoBehaviour:
   MeshMaterial: {fileID: 0}
   model: {fileID: 0}
   texture: {fileID: 0}
+  MeshName: []

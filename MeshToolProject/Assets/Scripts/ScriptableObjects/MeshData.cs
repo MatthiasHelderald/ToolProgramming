@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization.Json;
 using Palmmedia.ReportGenerator.Core.Common;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -29,7 +30,7 @@ namespace ScriptableObjects
             if (!MeshName.Contains(meshName))
             {
                 MeshName.Add(meshName);
-                //MeshObject.Add(mesh);
+                MeshData data = MeshData.CreateInstance("zaza");
             }
             else
                 ReplaceBool(meshName);
@@ -38,6 +39,19 @@ namespace ScriptableObjects
         {
             //var idx = this.MeshName.FindIndex(s => s == meshName );
             //MeshPrefabState[idx] = meshBool;
+        }
+        public void Init(string name)
+        {
+            this.name = name;
+            //this.model = model;
+        }
+        public static MeshData CreateInstance(string name)
+        {
+            var data = MeshData.CreateInstance<MeshData>();
+            Debug.Log("uh");
+            //MeshData data = ScriptableObject.CreateInstance(name) as MeshData;
+            data.Init(name);
+            return data;
         }
     }
 }
