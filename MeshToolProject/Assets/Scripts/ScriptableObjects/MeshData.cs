@@ -14,13 +14,15 @@ namespace ScriptableObjects
         public List<string> MeshName = new List<string>();
         public List<bool> MeshPrefabState = new List<bool>();
         public List<float> MeshAxis = new List<float>();
+        public List<Mesh> MeshObject = new List<Mesh>();
         public List<Material> MeshMaterial = new List<Material>();
         
-        public void UpdateMesh(string meshName)
+        public void UpdateMesh(string meshName,Mesh meshObject)
         {
-            if (!this.MeshName.Contains(meshName))
+            if (!MeshName.Contains(meshName))
             {
-                this.MeshName.Add(meshName);
+                MeshName.Add(meshName);
+                MeshObject.Add(meshObject);
             }
             else
                 ReplaceBool(meshName);

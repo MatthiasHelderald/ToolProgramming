@@ -26,12 +26,16 @@ namespace Editor
                 return;
             this.meshData = meshDatas[0];
             
-            Mesh[] meshes =  = AssetDatabase.FindAssets("co l:architecture t:texture2D", new[] {"Assets/MyAwesomeProps"});
+            //Mesh[] meshes = Resources.FindObjectsOfTypeAll<Mesh>();
+            Mesh[] meshes = Resources.LoadAll<Mesh>("Mesh");
 
-            foreach (var meshID in meshes)
+            foreach (var mesh in meshes)
             {
-                EditorGUILayout.LabelField(meshID.name);
-                //meshDatas[0].UpdateMesh(meshObject.name);
+                //var meshPath = AssetDatabase.GUIDToAssetPath(meshID);
+                //Object meshObject = AssetDatabase.LoadAssetAtPath(meshPath,typeof(Mesh));
+                EditorGUILayout.LabelField(mesh.name);
+                
+                meshDatas[0].UpdateMesh(mesh.name,mesh);
             }
         }
         private void LoadAllAssetsOfType<T>(out T[] assets) where T : Object
