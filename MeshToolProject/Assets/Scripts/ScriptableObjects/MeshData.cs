@@ -11,18 +11,25 @@ namespace ScriptableObjects
     [CreateAssetMenu(fileName = "MeshData", menuName = "MeshManagement/new Mesh Data", order = 0)]
     public class MeshData : ScriptableObject
     {
-        public List<string> MeshName = new List<string>();
-        public List<bool> MeshPrefabState = new List<bool>();
-        public List<float> MeshAxis = new List<float>();
-        public List<Mesh> MeshObject = new List<Mesh>();
-        public List<Material> MeshMaterial = new List<Material>();
+        public string displayName;
+        public float MeshAxis;
+        public bool MeshPrefabState;
+        public Material MeshMaterial;
+        public Mesh model;
+        public Texture texture;
         
-        public void UpdateMesh(string meshName,Mesh meshObject)
+        public List<string> MeshName = new List<string>();
+        // public List<bool> MeshPrefabState = new List<bool>();
+        // public List<float> MeshAxis = new List<float>();
+        // public List<Mesh> MeshObject = new List<Mesh>();
+        // public List<Material> MeshMaterial = new List<Material>();
+        
+        public void UpdateMesh(string meshName,Mesh mesh)
         {
             if (!MeshName.Contains(meshName))
             {
                 MeshName.Add(meshName);
-                MeshObject.Add(meshObject);
+                //MeshObject.Add(mesh);
             }
             else
                 ReplaceBool(meshName);

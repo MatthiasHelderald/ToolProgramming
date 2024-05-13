@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PrefabData
   m_EditorClassIdentifier: 
   displayName: 
-  prefabType: 0
+  prefabType: 1
   model: {fileID: 0}
   texture: {fileID: 0}

@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d05e4e02371edc04c86b1489f71eb429, type: 3}
   m_Name: MeshData
   m_EditorClassIdentifier: 
-  MeshName:
-  - e4acfe6e1753a7d4e8f98e71543f817c
-  - c473980bb9536ea498b4dd9d444f11a2
-  - 17670a2cd887d554ea853c182a4261da
-  - c24efa8cab66cb24ca4d5c5714a936c9
-  MeshPrefabState: 
-  MeshAxis: []
-  MeshMaterial: []
+  displayName: 
+  MeshAxis: 0
+  MeshPrefabState: 0
+  MeshMaterial: {fileID: 0}
+  model: {fileID: 0}
+  texture: {fileID: 0}
