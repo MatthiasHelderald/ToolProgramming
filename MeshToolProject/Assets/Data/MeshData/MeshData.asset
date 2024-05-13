@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d05e4e02371edc04c86b1489f71eb429, type: 3}
+  m_Name: MeshData
+  m_EditorClassIdentifier: 
+  MeshName:
+  - e4acfe6e1753a7d4e8f98e71543f817c
+  - c473980bb9536ea498b4dd9d444f11a2
+  - 17670a2cd887d554ea853c182a4261da
+  - c24efa8cab66cb24ca4d5c5714a936c9
+  MeshPrefabState: 
+  MeshAxis: []
+  MeshMaterial: []
