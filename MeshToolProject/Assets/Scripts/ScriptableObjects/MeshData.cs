@@ -47,10 +47,14 @@ namespace ScriptableObjects
         }
         public static MeshData CreateInstance(string name)
         {
-            var data = MeshData.CreateInstance<MeshData>();
-            Debug.Log("uh");
-            //MeshData data = ScriptableObject.CreateInstance(name) as MeshData;
-            data.Init(name);
+            // var data = ScriptableObject.CreateInstance<MeshData>();
+            // Debug.Log("uh");
+            // MeshData data = ScriptableObject.CreateInstance(name) as MeshData;
+            // data.Init(name);
+            // return data;
+            
+            var data = ScriptableObject.CreateInstance<MeshData>();
+            data.displayName = name;
             return data;
         }
     }
