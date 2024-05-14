@@ -34,13 +34,20 @@ namespace ScriptableObjects
                 Debug.Log("Duplicated " + data.name);
             }
             else
-                Updatevalues(meshName,mesh);
+                Updatevalues(meshName,mesh,transform);
         }
-        public void Updatevalues(string meshName,Mesh mesh)
+        public void Updatevalues(string meshName,Mesh mesh,Transform transform)
         {
             var idx = this.MeshName.FindIndex(s => s == meshName );
             MeshName[idx] = meshName;
             
+            var data = ScriptableObject.CreateInstance<MeshData>();
+            data.displayName = meshName;
+            data.model = mesh;
+            data.MeshAxis = transform.rotation.y;
+            data.MeshPrefabState = false;
+            
+            Debug.Log(meshName);
             //var meshData = AssetDatabase.LoadAssetAtPath<MeshData>("Assets/Data/MeshData/"+ meshName);
 
         }
