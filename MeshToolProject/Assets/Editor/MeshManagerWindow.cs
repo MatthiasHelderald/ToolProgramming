@@ -11,6 +11,7 @@ namespace Editor
 {
     public class MeshManagerWindow : UnityEditor.EditorWindow
     {
+        private MeshList meshList;
         private MeshData meshData;
         private PrefabData prefabData;
         [UnityEditor.MenuItem("Tools/MeshManager")]
@@ -22,14 +23,14 @@ namespace Editor
         }
 
         public string[] Strings =
-            {"displayName"};  
+            {"MeshObject"};  
         //{"displayName", "prefabType", "model", "texture"};
         private void OnGUI()
         {
-            LoadAllAssetsOfType(out MeshData[] meshDatas);
-            if (meshDatas == null || meshDatas.Length == 0)
+            LoadAllAssetsOfType(out MeshList[] meshLists);
+            if (meshLists == null || meshLists.Length == 0)
                 return;
-            //meshData = meshDatas[0];
+            meshList = meshLists[0];
             
             LoadAllAssetsOfType(out PrefabData[] prefabDatas);
             if (prefabDatas == null || prefabDatas.Length == 0)
@@ -42,22 +43,21 @@ namespace Editor
             foreach (var mesh in meshes)
             {
                 EditorGUILayout.LabelField(mesh.name);
-
-                meshData.UpdateMesh(mesh.name,mesh);
-
-                foreach (var property in Strings)
+                meshLists[0].UpdateMesh(mesh.name);
+                
+                /*foreach (var property in Strings)
                 {
-                    //EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.BeginHorizontal();
                     
-                    //so = new SerializedObject(meshData);
-                    //so.Update();
+                    so = new SerializedObject(meshList);
+                    so.Update();
                     
-                    //EditorGUILayout.PropertyField(so.FindProperty(property), GUIContent.none, GUILayout.Width(75));
-                    //so.ApplyModifiedProperties();
+                    EditorGUILayout.PropertyField(so.FindProperty(property), GUIContent.none, GUILayout.Width(75));
+                    so.ApplyModifiedProperties();
 
 
-                    //EditorGUILayout.EndHorizontal();
-                }
+                    EditorGUILayout.EndHorizontal();
+                }*/
             }
         }
         private void LoadAllAssetsOfType<T>(out T[] assets) where T : Object
@@ -70,6 +70,15 @@ namespace Editor
                 var assetPath = AssetDatabase.GUIDToAssetPath(guids[i]);
                 assets[i] = AssetDatabase.LoadAssetAtPath<T>(assetPath);
             }
+        }
+
+        private void DuplicateMeshData(MeshData meshData)
+        {
+            var duplicatedmeshData = Instantiate(meshData);
+            AssetDatabase.CreateAsset(duplicatedmeshData,AssetDatabase.GenerateUniqueAssetPath("Assets/Data/MeshData/" + meshData.name + "_Copy.asset"));
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log("Duplicated " + meshData.name);
         }
     }
 }

@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d05e4e02371edc04c86b1489f71eb429, type: 3}
-  m_Name: MeshData
+  m_Script: {fileID: 11500000, guid: 09ad7542828300040bbf3058bf443f84, type: 3}
+  m_Name: Casserole
   m_EditorClassIdentifier: 
-  MeshName:
-  - Assiete
-  - Carrot0
-  - Casserole
+  displayName: Casserole
+  MeshAxis: 0
+  MeshPrefabState: 0
+  MeshMaterial: {fileID: 0}
+  model: {fileID: 0}
+  texture: {fileID: 0}
