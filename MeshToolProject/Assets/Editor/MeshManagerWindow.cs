@@ -14,6 +14,7 @@ namespace Editor
         private MeshList meshList;
         private MeshData meshData;
         private PrefabData prefabData;
+        private int i;
         Vector2 scrollPos;
         
         [UnityEditor.MenuItem("Tools/MeshManager")]
@@ -25,7 +26,7 @@ namespace Editor
         }
 
         public string[] Strings = 
-        {"displayName", "model","MeshAxis"};
+        {"MeshMaterial","prefabTemplate"};
         private void OnGUI()
         {
             LoadAllAssetsOfType(out MeshList[] meshLists);
@@ -48,19 +49,15 @@ namespace Editor
             foreach (var gameObject in meshObjects)
             {
                 meshLists[0].UpdateMesh(gameObject.GetComponent<MeshFilter>().name,gameObject.GetComponent<MeshFilter>().sharedMesh,gameObject.transform);
-                if (GUILayout.Button("Prefab")) PrefabThis(gameObject);
+                //if (GUILayout.Button("Prefab")) PrefabThis(meshdata.prefabTemplate,gameObject);
             }
-            
-            // foreach (var mesh in meshes)
-            // {
-            //     meshLists[0].UpdateMesh(mesh.name,mesh,currentTransform);
-            // }
 
             EditorGUILayout.BeginScrollView(scrollPos);
             EditorGUILayout.BeginHorizontal();
             
             foreach (var meshdata in meshDatas)
             {
+                if (GUILayout.Button("Prefab")) PrefabThis(meshdata.prefabTemplate,meshdata.meshObject);
                 EditorGUILayout.BeginVertical();
                 
                 EditorGUILayout.LabelField(meshdata.displayName);
@@ -71,10 +68,23 @@ namespace Editor
                 foreach (var property in Strings)
                 {
                     EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.PropertyField(so.FindProperty(property), GUIContent.none, GUILayout.Width(75));
+                    EditorGUILayout.PropertyField(so.FindProperty(property), GUIContent.none, GUILayout.Width(135));
                     so.ApplyModifiedProperties();
                     EditorGUILayout.EndHorizontal();
-                } 
+                }
+
+                if (meshdata.MeshPrefabState == false)
+                {
+                    var originalColor = GUI.backgroundColor;
+                    GUI.backgroundColor = Color.yellow;
+                    EditorGUILayout.PropertyField(so.FindProperty("MeshAxis"), GUIContent.none, true,
+                        GUILayout.Width(135));
+                    GUI.backgroundColor = originalColor;
+                    {
+                        so.ApplyModifiedProperties();
+                    }
+                }
+                
                 
                 EditorGUILayout.EndVertical();
             }
@@ -94,14 +104,22 @@ namespace Editor
             }
         }
 
-        private void PrefabThis(GameObject meshObject)
+        private void PrefabThis(GameObject template ,GameObject meshObject)
         {
             string localPath = "Assets/Prefab/" + meshObject.name + ".prefab";
             localPath = AssetDatabase.GenerateUniqueAssetPath(localPath);
+            //MeshData meshData = AssetDatabase.LoadAssetAtPath<MeshData>("Assets/Data/MeshData/" + meshObject.GetComponent<MeshFilter>().sharedMesh + ".asset");
+            
             Debug.Log(localPath);
             //Instantiate(meshObject);
             
-            PrefabUtility.SaveAsPrefabAsset(meshObject, localPath);
+             GameObject go = PrefabUtility.SaveAsPrefabAsset(template, localPath);
+             go.name = meshObject.name;
+             go.transform.Find("_replace_").GetComponent<MeshFilter>().sharedMesh = meshObject.GetComponent<MeshFilter>().sharedMesh;
+             // foreach (var child in go.transform) 
+             // {
+             //     
+             // }
         }
     }
 }

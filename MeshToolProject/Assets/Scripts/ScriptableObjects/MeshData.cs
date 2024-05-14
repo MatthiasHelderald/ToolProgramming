@@ -17,6 +17,8 @@ namespace ScriptableObjects
         public Material MeshMaterial;
         public Mesh model;
         public Texture texture;
+        public GameObject prefabTemplate;
+        public GameObject meshObject;
 
     }
 }

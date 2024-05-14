@@ -9,15 +9,11 @@ using UnityEngine.SceneManagement;
 
 namespace ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "MeshData", menuName = "MeshManagement/new Mesh Data", order = 0)]
+    [CreateAssetMenu(fileName = "MeshList", menuName = "MeshManagement/new Mesh List", order = 0)]
     public class MeshList: ScriptableObject
     {
         public List<string> MeshName = new List<string>();
-        // public List<bool> MeshPrefabState = new List<bool>();
-        // public List<float> MeshAxis = new List<float>();
-        // public List<Mesh> MeshObject = new List<Mesh>();
-        // public List<Material> MeshMaterial = new List<Material>();
-        
+        private GameObject uh;
         public void UpdateMesh(string meshName,Mesh mesh,Transform transform)
         {
             if (!MeshName.Contains(meshName))
@@ -27,6 +23,7 @@ namespace ScriptableObjects
                 data.displayName = meshName;
                 data.model = mesh;
                 data.MeshAxis = transform.rotation.x;
+                data.meshObject = transform.gameObject;
                 data.MeshPrefabState = false;
                 UnityEditor.AssetDatabase.CreateAsset(data, AssetDatabase.GenerateUniqueAssetPath("Assets/Data/MeshData/"+ meshName+".asset"));
                 AssetDatabase.SaveAssets();
@@ -38,33 +35,28 @@ namespace ScriptableObjects
         }
         public void Updatevalues(string meshName,Mesh mesh,Transform transform)
         {
-            //var idx = this.MeshName.FindIndex(s => s == meshName );
-            //MeshName[idx] = meshName;
-            
-            //var data = ScriptableObject.CreateInstance<MeshData>();
-            //data.displayName = meshName;
-            //data.model = mesh;
-            //data.MeshAxis = transform.rotation.eulerAngles.x;
-            //data.MeshPrefabState = false;
-
             MeshData meshData = AssetDatabase.LoadAssetAtPath<MeshData>("Assets/Data/MeshData/"+ meshName+".asset");
             meshData.displayName = meshName;
             meshData.model = mesh;
             meshData.MeshAxis = Quaternion.Inverse(transform.rotation).eulerAngles.x;
+            meshData.meshObject = transform.gameObject;
+            transform.GetComponent<MeshRenderer>().material = meshData.MeshMaterial;
+            transform.position = Vector3.zero;
         }
         
-        public static MeshData CreateInstance(string name)
+        /*public static MeshData Init(MeshData data)
         {
             // var data = ScriptableObject.CreateInstance<MeshData>();
-            // Debug.Log("uh");
             // MeshData data = ScriptableObject.CreateInstance(name) as MeshData;
             // data.Init(name);
             // return data;
             
-            var data = ScriptableObject.CreateInstance<MeshData>();
-            data.displayName = name;
+            data = ScriptableObject.CreateInstance<MeshData>();
+            data.displayName = transform.name;
+            data.model = transform.GetComponent<MeshFilter>().sharedMesh;
+            data.MeshAxis = Quaternion.Inverse(transform.transform.rotation).eulerAngles.x;
             return data;
-        }
+        }*/
         
     }
 }
