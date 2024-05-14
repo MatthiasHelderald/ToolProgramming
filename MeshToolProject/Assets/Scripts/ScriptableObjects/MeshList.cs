@@ -50,7 +50,7 @@ namespace ScriptableObjects
             MeshData meshData = AssetDatabase.LoadAssetAtPath<MeshData>("Assets/Data/MeshData/"+ meshName+".asset");
             meshData.displayName = meshName;
             meshData.model = mesh;
-            meshData.MeshAxis = (transform.eulerAngles.x);
+            meshData.MeshAxis = Quaternion.Inverse(transform.rotation).eulerAngles.x;
         }
         
         public static MeshData CreateInstance(string name)
