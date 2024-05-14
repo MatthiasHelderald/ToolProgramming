@@ -26,7 +26,7 @@ namespace ScriptableObjects
                 var data = ScriptableObject.CreateInstance<MeshData>();
                 data.displayName = meshName;
                 data.model = mesh;
-                data.MeshAxis = transform.rotation.y;
+                data.MeshAxis = transform.rotation.x;
                 data.MeshPrefabState = false;
                 UnityEditor.AssetDatabase.CreateAsset(data, AssetDatabase.GenerateUniqueAssetPath("Assets/Data/MeshData/"+ meshName+".asset"));
                 AssetDatabase.SaveAssets();
@@ -38,18 +38,19 @@ namespace ScriptableObjects
         }
         public void Updatevalues(string meshName,Mesh mesh,Transform transform)
         {
-            var idx = this.MeshName.FindIndex(s => s == meshName );
-            MeshName[idx] = meshName;
+            //var idx = this.MeshName.FindIndex(s => s == meshName );
+            //MeshName[idx] = meshName;
             
-            var data = ScriptableObject.CreateInstance<MeshData>();
-            data.displayName = meshName;
-            data.model = mesh;
-            data.MeshAxis = transform.rotation.y;
-            data.MeshPrefabState = false;
-            
-            Debug.Log(meshName);
-            //var meshData = AssetDatabase.LoadAssetAtPath<MeshData>("Assets/Data/MeshData/"+ meshName);
+            //var data = ScriptableObject.CreateInstance<MeshData>();
+            //data.displayName = meshName;
+            //data.model = mesh;
+            //data.MeshAxis = transform.rotation.eulerAngles.x;
+            //data.MeshPrefabState = false;
 
+            MeshData meshData = AssetDatabase.LoadAssetAtPath<MeshData>("Assets/Data/MeshData/"+ meshName+".asset");
+            meshData.displayName = meshName;
+            meshData.model = mesh;
+            meshData.MeshAxis = (transform.eulerAngles.x);
         }
         
         public static MeshData CreateInstance(string name)

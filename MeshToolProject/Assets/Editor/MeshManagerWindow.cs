@@ -14,7 +14,6 @@ namespace Editor
         private MeshList meshList;
         private MeshData meshData;
         private PrefabData prefabData;
-        private Transform currentTransform;
         Vector2 scrollPos;
         
         [UnityEditor.MenuItem("Tools/MeshManager")]
@@ -48,13 +47,13 @@ namespace Editor
 
             foreach (var gameObject in meshObjects)
             {
-                currentTransform = gameObject.transform;
+                meshLists[0].UpdateMesh(gameObject.GetComponent<MeshFilter>().name,gameObject.GetComponent<MeshFilter>().sharedMesh,gameObject.transform);
             }
             
-            foreach (var mesh in meshes)
-            {
-                meshLists[0].UpdateMesh(mesh.name,mesh,currentTransform);
-            }
+            // foreach (var mesh in meshes)
+            // {
+            //     meshLists[0].UpdateMesh(mesh.name,mesh,currentTransform);
+            // }
 
             EditorGUILayout.BeginHorizontal();
             
