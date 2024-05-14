@@ -14,6 +14,9 @@ namespace Editor
         private MeshList meshList;
         private MeshData meshData;
         private PrefabData prefabData;
+        private Transform currentTransform;
+        Vector2 scrollPos;
+        
         [UnityEditor.MenuItem("Tools/MeshManager")]
         private static void ShowWindow()
         {
@@ -22,9 +25,8 @@ namespace Editor
             window.Show();
         }
 
-        public string[] Strings =
-            {"MeshObject"};  
-        //{"displayName", "prefabType", "model", "texture"};
+        public string[] Strings = 
+        {"displayName", "model","MeshAxis"};
         private void OnGUI()
         {
             LoadAllAssetsOfType(out MeshList[] meshLists);
@@ -32,33 +34,50 @@ namespace Editor
                 return;
             meshList = meshLists[0];
             
+            LoadAllAssetsOfType(out MeshData[] meshDatas);
+            if (meshDatas == null || meshLists.Length == 0)
+                return;
+
             LoadAllAssetsOfType(out PrefabData[] prefabDatas);
             if (prefabDatas == null || prefabDatas.Length == 0)
                 return;
-            prefabData = prefabDatas[0];
-            
+
             Mesh[] meshes = Resources.LoadAll<Mesh>("Mesh");
+            GameObject[] meshObjects = Resources.LoadAll<GameObject>("Mesh");
             SerializedObject so = null;
 
+            foreach (var gameObject in meshObjects)
+            {
+                currentTransform = gameObject.transform;
+            }
+            
             foreach (var mesh in meshes)
             {
-                EditorGUILayout.LabelField(mesh.name);
-                meshLists[0].UpdateMesh(mesh.name);
+                meshLists[0].UpdateMesh(mesh.name,mesh,currentTransform);
+            }
+
+            EditorGUILayout.BeginHorizontal();
+            
+            foreach (var meshdata in meshDatas)
+            {
+                EditorGUILayout.BeginVertical();
                 
-                /*foreach (var property in Strings)
+                EditorGUILayout.LabelField(meshdata.displayName);
+                so = new SerializedObject(meshdata);
+                so.Update();
+                    
+                foreach (var property in Strings)
                 {
                     EditorGUILayout.BeginHorizontal();
-                    
-                    so = new SerializedObject(meshList);
-                    so.Update();
-                    
                     EditorGUILayout.PropertyField(so.FindProperty(property), GUIContent.none, GUILayout.Width(75));
                     so.ApplyModifiedProperties();
-
-
                     EditorGUILayout.EndHorizontal();
-                }*/
+                } 
+                
+                EditorGUILayout.EndVertical();
             }
+            
+            EditorGUILayout.EndHorizontal();
         }
         private void LoadAllAssetsOfType<T>(out T[] assets) where T : Object
         {
@@ -70,15 +89,6 @@ namespace Editor
                 var assetPath = AssetDatabase.GUIDToAssetPath(guids[i]);
                 assets[i] = AssetDatabase.LoadAssetAtPath<T>(assetPath);
             }
-        }
-
-        private void DuplicateMeshData(MeshData meshData)
-        {
-            var duplicatedmeshData = Instantiate(meshData);
-            AssetDatabase.CreateAsset(duplicatedmeshData,AssetDatabase.GenerateUniqueAssetPath("Assets/Data/MeshData/" + meshData.name + "_Copy.asset"));
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-            Debug.Log("Duplicated " + meshData.name);
         }
     }
 }

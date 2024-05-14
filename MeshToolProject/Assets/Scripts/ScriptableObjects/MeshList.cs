@@ -18,25 +18,31 @@ namespace ScriptableObjects
         // public List<Mesh> MeshObject = new List<Mesh>();
         // public List<Material> MeshMaterial = new List<Material>();
         
-        public void UpdateMesh(string meshName)
+        public void UpdateMesh(string meshName,Mesh mesh,Transform transform)
         {
             if (!MeshName.Contains(meshName))
             {
                 MeshName.Add(meshName);
                 var data = ScriptableObject.CreateInstance<MeshData>();
                 data.displayName = meshName;
+                data.model = mesh;
+                data.MeshAxis = transform.rotation.y;
+                data.MeshPrefabState = false;
                 UnityEditor.AssetDatabase.CreateAsset(data, AssetDatabase.GenerateUniqueAssetPath("Assets/Data/MeshData/"+ meshName+".asset"));
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
                 Debug.Log("Duplicated " + data.name);
             }
-            //else
-                //ReplaceBool(meshName);
+            else
+                Updatevalues(meshName,mesh);
         }
-        public void ReplaceBool(string meshName)
+        public void Updatevalues(string meshName,Mesh mesh)
         {
-            //var idx = this.MeshName.FindIndex(s => s == meshName );
-            //MeshPrefabState[idx] = meshBool;
+            var idx = this.MeshName.FindIndex(s => s == meshName );
+            MeshName[idx] = meshName;
+            
+            //var meshData = AssetDatabase.LoadAssetAtPath<MeshData>("Assets/Data/MeshData/"+ meshName);
+
         }
         
         public static MeshData CreateInstance(string name)

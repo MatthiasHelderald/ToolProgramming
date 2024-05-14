@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Assiete
   m_EditorClassIdentifier: 
   displayName: Assiete
-  MeshAxis: 0
+  MeshAxis: -0.7071068
   MeshPrefabState: 0
   MeshMaterial: {fileID: 0}
-  model: {fileID: 0}
+  model: {fileID: -2194566791281473846, guid: e4acfe6e1753a7d4e8f98e71543f817c, type: 3}
   texture: {fileID: 0}

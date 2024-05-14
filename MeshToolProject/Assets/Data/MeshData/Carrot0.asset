@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Carrot0
   m_EditorClassIdentifier: 
   displayName: Carrot0
-  MeshAxis: 0
+  MeshAxis: -0.7071068
   MeshPrefabState: 0
   MeshMaterial: {fileID: 0}
-  model: {fileID: 0}
+  model: {fileID: -6603525848797615470, guid: c473980bb9536ea498b4dd9d444f11a2, type: 3}
   texture: {fileID: 0}
