@@ -48,6 +48,7 @@ namespace Editor
             foreach (var gameObject in meshObjects)
             {
                 meshLists[0].UpdateMesh(gameObject.GetComponent<MeshFilter>().name,gameObject.GetComponent<MeshFilter>().sharedMesh,gameObject.transform);
+                if (GUILayout.Button("Prefab")) PrefabThis(gameObject);
             }
             
             // foreach (var mesh in meshes)
@@ -55,6 +56,7 @@ namespace Editor
             //     meshLists[0].UpdateMesh(mesh.name,mesh,currentTransform);
             // }
 
+            EditorGUILayout.BeginScrollView(scrollPos);
             EditorGUILayout.BeginHorizontal();
             
             foreach (var meshdata in meshDatas)
@@ -62,6 +64,7 @@ namespace Editor
                 EditorGUILayout.BeginVertical();
                 
                 EditorGUILayout.LabelField(meshdata.displayName);
+                GUILayout.Box( AssetPreview.GetAssetPreview(meshdata.model));
                 so = new SerializedObject(meshdata);
                 so.Update();
                     
@@ -77,6 +80,7 @@ namespace Editor
             }
             
             EditorGUILayout.EndHorizontal();
+            EditorGUILayout.EndScrollView();
         }
         private void LoadAllAssetsOfType<T>(out T[] assets) where T : Object
         {
@@ -88,6 +92,16 @@ namespace Editor
                 var assetPath = AssetDatabase.GUIDToAssetPath(guids[i]);
                 assets[i] = AssetDatabase.LoadAssetAtPath<T>(assetPath);
             }
+        }
+
+        private void PrefabThis(GameObject meshObject)
+        {
+            string localPath = "Assets/Prefab/" + meshObject.name + ".prefab";
+            localPath = AssetDatabase.GenerateUniqueAssetPath(localPath);
+            Debug.Log(localPath);
+            //Instantiate(meshObject);
+            
+            PrefabUtility.SaveAsPrefabAsset(meshObject, localPath);
         }
     }
 }
