@@ -57,11 +57,11 @@ namespace Editor
             
             foreach (var meshdata in meshDatas)
             {
-                if (GUILayout.Button("Prefab")) PrefabThis(meshdata.prefabTemplate,meshdata.meshObject);
                 EditorGUILayout.BeginVertical();
                 
                 EditorGUILayout.LabelField(meshdata.displayName);
                 GUILayout.Box( AssetPreview.GetAssetPreview(meshdata.model));
+                if (GUILayout.Button("Prefab")) PrefabThis(meshdata.prefabTemplate,meshdata.meshObject);
                 so = new SerializedObject(meshdata);
                 so.Update();
                     
