@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Blender
   MeshAxis: 89.98022
-  MeshPrefabState: 0
+  MeshPrefabState: 1
   MeshMaterial: {fileID: 0}
   model: {fileID: 6906301029684952732, guid: c9ef8d5f360c3b44bbbfbadb962b5df3, type: 3}
   texture: {fileID: 0}
   prefabTemplate: {fileID: 8497322970619914968, guid: b917d6fb97c44d445b2bd8f0deb453ca, type: 3}
   meshObject: {fileID: 919132149155446097, guid: c9ef8d5f360c3b44bbbfbadb962b5df3, type: 3}
+  prefabCount: 8

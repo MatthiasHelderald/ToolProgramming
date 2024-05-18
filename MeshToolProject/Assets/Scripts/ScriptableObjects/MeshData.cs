@@ -19,6 +19,7 @@ namespace ScriptableObjects
         public Texture texture;
         public GameObject prefabTemplate;
         public GameObject meshObject;
+        public int prefabCount;
 
     }
 }

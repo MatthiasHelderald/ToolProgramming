@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Casserole
   m_EditorClassIdentifier: 
   displayName: Casserole
-  MeshAxis: -0.7071068
+  MeshAxis: 0
   MeshPrefabState: 0
   MeshMaterial: {fileID: 0}
   model: {fileID: 1944626355544057734, guid: 17670a2cd887d554ea853c182a4261da, type: 3}
   texture: {fileID: 0}
+  prefabTemplate: {fileID: 0}
+  meshObject: {fileID: 919132149155446097, guid: 17670a2cd887d554ea853c182a4261da, type: 3}
+  prefabCount: 0

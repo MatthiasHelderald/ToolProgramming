@@ -26,7 +26,7 @@ namespace Editor
         }
 
         public string[] Strings = 
-        {"MeshMaterial","prefabTemplate"};
+        {"MeshMaterial","prefabTemplate","prefabCount"};
         private void OnGUI()
         {
             LoadAllAssetsOfType(out MeshList[] meshLists);
@@ -61,7 +61,23 @@ namespace Editor
                 
                 EditorGUILayout.LabelField(meshdata.displayName);
                 GUILayout.Box( AssetPreview.GetAssetPreview(meshdata.model));
-                if (GUILayout.Button("Prefab")) PrefabThis(meshdata.prefabTemplate,meshdata.meshObject);
+                
+                var buttonColor = GUI.backgroundColor;
+                if (meshdata.MeshPrefabState)
+                {
+                    GUI.backgroundColor = Color.yellow;
+                }
+
+                else GUI.backgroundColor = Color.cyan;
+                
+                if (GUILayout.Button("Prefab"))
+                {
+                    PrefabThis(meshdata.prefabTemplate, meshdata.meshObject);
+                    meshdata.MeshPrefabState = true;
+                }
+                
+                GUI.backgroundColor = buttonColor;
+
                 so = new SerializedObject(meshdata);
                 so.Update();
                     
@@ -73,18 +89,15 @@ namespace Editor
                     EditorGUILayout.EndHorizontal();
                 }
 
-                if (meshdata.MeshPrefabState == false)
+                var originalColor = GUI.backgroundColor;
+                if (meshdata.MeshAxis != 0) GUI.backgroundColor = Color.yellow;
+                else GUI.backgroundColor = Color.cyan;
+                EditorGUILayout.PropertyField(so.FindProperty("MeshAxis"), GUIContent.none, true,
+                    GUILayout.Width(135));
+                GUI.backgroundColor = originalColor;
                 {
-                    var originalColor = GUI.backgroundColor;
-                    GUI.backgroundColor = Color.yellow;
-                    EditorGUILayout.PropertyField(so.FindProperty("MeshAxis"), GUIContent.none, true,
-                        GUILayout.Width(135));
-                    GUI.backgroundColor = originalColor;
-                    {
-                        so.ApplyModifiedProperties();
-                    }
+                    so.ApplyModifiedProperties();
                 }
-                
                 
                 EditorGUILayout.EndVertical();
             }
