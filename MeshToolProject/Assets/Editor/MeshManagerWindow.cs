@@ -27,7 +27,7 @@ namespace Editor
         }
 
         public string[] Strings = 
-        {"MeshMaterial","prefabTemplate","prefabCount"};
+        {"MeshMaterial","prefabTemplate","MeshPrefabState","prefabCount"};
         private void OnGUI()
         {
             LoadAllAssetsOfType(out MeshList[] meshLists);
@@ -64,22 +64,6 @@ namespace Editor
                 
                 EditorGUILayout.LabelField(meshdata.displayName);
                 GUILayout.Box( AssetPreview.GetAssetPreview(meshdata.model));
-                
-                var buttonColor = GUI.backgroundColor;
-                if (meshdata.MeshPrefabState)
-                {
-                    GUI.backgroundColor = Color.yellow;
-                }
-
-                else GUI.backgroundColor = Color.cyan;
-                
-                if (GUILayout.Button("Prefab"))
-                {
-                    PrefabThis(meshdata.prefabTemplate, meshdata.meshObject);
-                    meshdata.MeshPrefabState = true;
-                }
-                
-                GUI.backgroundColor = buttonColor;
 
                 so = new SerializedObject(meshdata);
                 so.Update();
@@ -101,6 +85,22 @@ namespace Editor
                 {
                     so.ApplyModifiedProperties();
                 }
+                
+                var buttonColor = GUI.backgroundColor;
+                if (meshdata.MeshPrefabState)
+                {
+                    GUI.backgroundColor = Color.yellow;
+                }
+
+                else GUI.backgroundColor = Color.cyan;
+                
+                if (GUILayout.Button("Prefab"))
+                {
+                    PrefabThis(meshdata.prefabTemplate, meshdata.meshObject);
+                    meshdata.MeshPrefabState = true;
+                }
+                
+                GUI.backgroundColor = buttonColor;
                 
                 EditorGUILayout.EndVertical();
             }

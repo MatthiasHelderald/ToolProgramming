@@ -52,17 +52,13 @@ namespace ScriptableObjects
             meshData.MeshAxis = Quaternion.Inverse(transform.rotation).eulerAngles.x;
             meshData.meshObject = transform.gameObject;
             meshData.MeshPrefabState = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefab/" + meshName+".prefab");
-            meshData.prefabCount = CountOccurenceOfValue(PrefabMeshList, mesh);
+            meshData.prefabCount = CountOccurenceOfValue(PrefabMeshList,mesh);
 
             foreach (var uh in PrefabList)
             {
-                if (uh.name.Contains(meshName))
-                {
-                    Debug.Log(uh);
-                }
+                if (uh.name.Contains(meshName)) Debug.Log(uh);
             }
-
-            //meshData.prefabCount = 
+            
             transform.GetComponent<MeshRenderer>().material = meshData.MeshMaterial;
             transform.position = Vector3.zero;
         }
