@@ -27,7 +27,7 @@ namespace Editor
         }
 
         public string[] Strings = 
-        {"MeshMaterial","prefabTemplate","MeshPrefabState","prefabCount"};
+        {"MeshMaterial","MeshPrefabState","prefabCount"};
         private void OnGUI()
         {
             LoadAllAssetsOfType(out MeshList[] meshLists);
@@ -77,6 +77,15 @@ namespace Editor
                 }
 
                 var originalColor = GUI.backgroundColor;
+                if (meshdata.prefabTemplate == null) GUI.backgroundColor = Color.red;
+                else GUI.backgroundColor = Color.cyan;
+                EditorGUILayout.PropertyField(so.FindProperty("prefabTemplate"), true,
+                    GUILayout.Width(250));
+                GUI.backgroundColor = originalColor;
+                {
+                    so.ApplyModifiedProperties();
+                }
+                
                 if (meshdata.MeshAxis != 0) GUI.backgroundColor = Color.yellow;
                 else GUI.backgroundColor = Color.cyan;
                 EditorGUILayout.PropertyField(so.FindProperty("MeshAxis"), true,
