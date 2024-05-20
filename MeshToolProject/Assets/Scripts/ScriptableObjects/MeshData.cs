@@ -20,6 +20,7 @@ namespace ScriptableObjects
         public GameObject prefabTemplate;
         public GameObject meshObject;
         public int prefabCount;
+        public List<GameObject> prefabSimilar;
 
     }
 }

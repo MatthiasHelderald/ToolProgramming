@@ -15,6 +15,7 @@ namespace Editor
         private MeshData meshData;
         private PrefabData prefabData;
         private int i;
+        private string path;
         Vector2 scrollPos;
         
         [UnityEditor.MenuItem("Tools/MeshManager")]
@@ -48,7 +49,9 @@ namespace Editor
 
             foreach (var gameObject in meshObjects)
             {
-                meshLists[0].UpdateMesh(gameObject.GetComponent<MeshFilter>().name,gameObject.GetComponent<MeshFilter>().sharedMesh,gameObject.transform);
+                meshLists[0].UpdateMesh(gameObject.GetComponent<MeshFilter>().name,
+                    gameObject.GetComponent<MeshFilter>().sharedMesh, gameObject.transform,path);
+                //Debug.Log(path);
                 //if (GUILayout.Button("Prefab")) PrefabThis(meshdata.prefabTemplate,gameObject);
             }
 
@@ -84,7 +87,7 @@ namespace Editor
                 foreach (var property in Strings)
                 {
                     EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.PropertyField(so.FindProperty(property), GUIContent.none, GUILayout.Width(135));
+                    EditorGUILayout.PropertyField(so.FindProperty(property), GUILayout.Width(250));
                     so.ApplyModifiedProperties();
                     EditorGUILayout.EndHorizontal();
                 }
@@ -92,8 +95,8 @@ namespace Editor
                 var originalColor = GUI.backgroundColor;
                 if (meshdata.MeshAxis != 0) GUI.backgroundColor = Color.yellow;
                 else GUI.backgroundColor = Color.cyan;
-                EditorGUILayout.PropertyField(so.FindProperty("MeshAxis"), GUIContent.none, true,
-                    GUILayout.Width(135));
+                EditorGUILayout.PropertyField(so.FindProperty("MeshAxis"), true,
+                    GUILayout.Width(250));
                 GUI.backgroundColor = originalColor;
                 {
                     so.ApplyModifiedProperties();
@@ -121,18 +124,16 @@ namespace Editor
         {
             string localPath = "Assets/Prefab/" + meshObject.name + ".prefab";
             localPath = AssetDatabase.GenerateUniqueAssetPath(localPath);
+            path = localPath;
             //MeshData meshData = AssetDatabase.LoadAssetAtPath<MeshData>("Assets/Data/MeshData/" + meshObject.GetComponent<MeshFilter>().sharedMesh + ".asset");
             
             Debug.Log(localPath);
             //Instantiate(meshObject);
             
-             GameObject go = PrefabUtility.SaveAsPrefabAsset(template, localPath);
-             go.name = meshObject.name;
-             go.transform.Find("_replace_").GetComponent<MeshFilter>().sharedMesh = meshObject.GetComponent<MeshFilter>().sharedMesh;
-             // foreach (var child in go.transform) 
-             // {
-             //     
-             // }
+            GameObject go = PrefabUtility.SaveAsPrefabAsset(template, localPath);
+            go.name = meshObject.name;
+            go.transform.Find("_replace_").GetComponent<MeshFilter>().sharedMesh = meshObject.GetComponent<MeshFilter>().sharedMesh;
+
         }
     }
 }
